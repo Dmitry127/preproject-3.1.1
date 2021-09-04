@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+
+<form action="/logout" method="GET">
+    <button>logout</button>
+</form>
+
+<table style="border:1px solid black;" align="right">
+    <tr>
+        <th>Id</th>
+        <th>Login</th>
+        <th>Password</th>
+        <th>Name</th>
+        <th>Last Name</th>
+        <th>E-mail</th>
+        <th>Roles</th>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}">id</td>
+        <td th:text="${user.login}">login</td>
+        <td th:text="${user.password}">password</td>
+        <td th:text="${user.name}">name</td>
+        <td th:text="${user.lastName}">last name</td>
+        <td th:text="${user.email}">email</td>
+        <td th:text="${user.roles}">roles</td>
+    </tr>
+</table>
+
+
+<h2>Add User</h2>
+    <form th:method="POST" th:action="@{/admin}" th:object="${user}">
+        <label for="login">Login</label>
+        <input type="text" th:field="*{login}" id="login"/>
+
+        <br>
+
+        <label for="password">Password</label>
+        <input type="text" th:field="*{password}" id="password"/>
+
+
+        <br>
+
+        <label for="name">Name</label>
+        <input type="text" th:field="*{name}" id="name"/>
+
+        <br>
+
+        <label for="lastName">Last Name</label>
+        <input type="text" th:field="*{lastName}" id="lastName"/>
+
+        <br>
+
+        <label for="email">E-Mail</label>
+        <input type="text" th:field="*{email}" id="email"/>
+
+        <br>
+
+        <label for="adminRole">Admin Role</label>
+        <input type="checkbox" id="adminRole" name="adminRole" value="ADMIN">
+
+        <br>
+
+        <input type="submit" value="Add User"/>
+    </form>
+
+    <br>
+
+<h2>Update user</h2>
+<form th:method="GET" th:action="@{/admin/update}">
+    <label for="login">Login</label>
+    <input type="text" name="login" id="login"/>
+
+    <input type="submit" value="Update user"/>
+</form>
+
+    <h2>Delete User</h2>
+    <form th:method="DELETE" th:action="@{/admin}">
+        <label for="login">Login</label>
+        <input type="text" th:name="login"/>
+
+        <br>
+
+        <input type="submit" value="Delete User"/>
+    </form>
+
+</body>
+</html>
