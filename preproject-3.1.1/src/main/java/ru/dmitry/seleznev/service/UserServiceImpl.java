@@ -9,6 +9,7 @@ import ru.dmitry.seleznev.dao.UserDAO;
 import ru.dmitry.seleznev.model.Role;
 import ru.dmitry.seleznev.model.User;
 
+import javax.annotation.PostConstruct;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,6 +18,20 @@ import java.util.Set;
 public class UserServiceImpl implements  UserService, UserDetailsService {
 
     private final UserDAO userDAO;
+
+    @PostConstruct
+    private void adminCreate() {
+        Set<Role> roles = new HashSet<>();
+        roles.add(getRole("ADMIN"));
+        roles.add(getRole("USER"));
+        User user = new User("admin", "admin", "admin", "admin", "admin@mail.ru", roles);
+        userDAO.saveUser(user);
+
+        Set<Role> rolesuser = new HashSet<>();
+        rolesuser.add(getRole("USER"));
+        User user1 = new User("user", "user", "user", "user","user@mail.ru", rolesuser);
+        userDAO.saveUser(user1);
+    }
 
     @Autowired
     public UserServiceImpl(UserDAO userDAO) {
