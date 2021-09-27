@@ -69,11 +69,13 @@ public class UserServiceImpl implements  UserService, UserDetailsService {
     @Override
     public void updateUser(User user, String adminRole) {
         User persistentUser = getUser(user.getLogin());
-        persistentUser.setPassword(passwordEncoder.encode(user.getPassword()));
         persistentUser.setName(user.getName());
         persistentUser.setLastName(user.getLastName());
         persistentUser.setEmail(user.getEmail());
         persistentUser.setRoles(getRoleSet(adminRole));
+        if (!user.getPassword().equals(persistentUser.getPassword())) {
+            persistentUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
     }
 
     @Override
