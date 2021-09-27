@@ -42,13 +42,7 @@ public class AdminController {
 
     @PatchMapping()
     public String updateUser(@ModelAttribute("user") User user, @RequestParam(defaultValue = "") String adminRole) {
-        User persistentUser = userService.getUser(user.getLogin());
-        persistentUser.setPassword(user.getPassword());
-        persistentUser.setName(user.getName());
-        persistentUser.setLastName(user.getLastName());
-        persistentUser.setEmail(user.getEmail());
-        persistentUser.setRoles(userService.getRoleSet(adminRole));
-        userService.updateUser(persistentUser);
+        userService.updateUser(user, adminRole);
         return "redirect:/admin";
     }
 

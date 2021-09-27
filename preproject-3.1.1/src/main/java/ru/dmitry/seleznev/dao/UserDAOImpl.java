@@ -1,7 +1,8 @@
 package ru.dmitry.seleznev.dao;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ru.dmitry.seleznev.model.Role;
 import ru.dmitry.seleznev.model.User;
 
@@ -18,7 +19,6 @@ public class UserDAOImpl implements UserDAO {
 
 
     @Override
-    @Transactional
     public void saveUser(User user) {
         entityManager.persist(user);
     }
@@ -35,7 +35,6 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    @Transactional
     public Role getRole(String role) {
         try {
             return entityManager.createQuery("select r from Role r where r.role = :role", Role.class)
@@ -55,19 +54,16 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    @Transactional
     public void updateUser(User user) {
         entityManager.merge(user);
     }
 
     @Override
-    @Transactional
     public void deleteUser(long id) {
         entityManager.remove(entityManager.find(User.class, id));
     }
 
     @Override
-    @Transactional
     public void deleteUser(String login) {
         entityManager.remove(getUser(login));
     }

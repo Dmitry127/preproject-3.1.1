@@ -17,7 +17,7 @@ public interface UserService {
 
     List<User> getAllUsers();
 
-    void updateUser(User user);
+    void updateUser(User user, String adminRole);
 
     void deleteUser(long id);
 
