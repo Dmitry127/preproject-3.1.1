@@ -1,13 +1,9 @@
 package ru.dmitry.seleznev.dao;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
-import ru.dmitry.seleznev.model.Role;
 import ru.dmitry.seleznev.model.User;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
@@ -16,7 +12,6 @@ public class UserDAOImpl implements UserDAO {
 
     @PersistenceContext
     private EntityManager entityManager;
-
 
     @Override
     public void saveUser(User user) {
@@ -32,20 +27,6 @@ public class UserDAOImpl implements UserDAO {
     public User getUser(String login) {
         return entityManager.createQuery("select u from  User u join fetch u.roles where u.login = :login", User.class)
                 .setParameter("login", login).getSingleResult();
-    }
-
-    @Override
-    public Role getRole(String role) {
-        try {
-            return entityManager.createQuery("select r from Role r where r.role = :role", Role.class)
-                    .setParameter("role", "ROLE_" + role).getSingleResult();
-        } catch (NoResultException e) {
-            Role newRole = new Role();
-            newRole.setRole("ROLE_" + role);
-            entityManager.persist(newRole);
-            return entityManager.createQuery("select r from Role r where r.role = :role", Role.class)
-                    .setParameter("role", "ROLE_" + role).getSingleResult();
-        }
     }
 
     @Override

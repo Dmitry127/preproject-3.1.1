@@ -1,6 +1,5 @@
 package ru.dmitry.seleznev.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,18 +26,15 @@ public class AdminController {
 
     @PostMapping()
     public String saveUser(@ModelAttribute("user") User user, @RequestParam(defaultValue = "") String adminRole) {
-        user.setRoles(userService.getRoleSet(adminRole));
-        userService.saveUser(user);
+        userService.saveUser(user, adminRole);
         return "redirect:/admin";
     }
-
 
     @GetMapping("/update")
     public String updatePage(Model model, @RequestParam("login") String login) {
         model.addAttribute("user", userService.getUser(login));
         return "update";
     }
-
 
     @PatchMapping()
     public String updateUser(@ModelAttribute("user") User user, @RequestParam(defaultValue = "") String adminRole) {
