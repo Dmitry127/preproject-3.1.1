@@ -1,4 +1,4 @@
-package ru.dmitry.seleznev.config.security.handler;
+package ru.dmitry.seleznev.config.handler;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
